@@ -10,16 +10,43 @@
 
 <br>
 
+## 주요 의존성과 간략한 특징
+
+### 1. Express.js  
+- RESTful API와 서버 구축에 사용된 Node.js 기반의 웹 애플리케이션 프레임워크입니다.  
+- 미들웨어 구조를 통해 요청과 응답 처리 로직을 명확하게 분리하고, 코드의 유지보수를 용이하게 했습니다.  
+- 경로별 라우팅 시스템을 활용하여 API 엔드포인트를 체계적으로 관리할 수 있었습니다.  
+
+### 2. MongoDB  
+- 문서(Document) 기반의 NoSQL 데이터베이스를 사용하여 데이터를 유연하게 저장했습니다.  
+- 스키마 설계에 유연성을 부여하여 데이터 중복을 허용하며, 구조화되지 않은 데이터도 효과적으로 관리할 수 있었습니다.  
+- 대규모 데이터를 처리할 수 있는 확장성을 바탕으로 빠른 데이터 저장 및 검색이 가능했습니다.  
+
+### 3. Mongoose  
+- MongoDB와의 상호작용을 단순화하기 위해 Mongoose ODM(Object Data Modeling) 라이브러리를 사용했습니다.  
+- 스키마를 정의하여 데이터의 유효성을 검사하고, 복잡한 쿼리를 보다 직관적으로 구현할 수 있었습니다.  
+- 미들웨어 기능을 활용해 데이터 저장 전 후 처리 작업(예: 암호화, 시간 기록)을 자동화했습니다.  
+
+### 4. JsonWebToken (JWT)  
+- 사용자 인증 및 권한 부여를 위해 JWT를 도입했습니다.  
+- Express의 미들웨어를 통해 API 요청 시 토큰의 유효성을 검사하고, GET 요청을 제외한 모든 요청에서 인증을 요구했습니다.  
+- 토큰 기반의 무상태 인증 방식을 통해 서버의 세션 관리 부담을 줄이고, 확장성을 높였습니다.  
+
+### 5. Swagger  
+- API 설계와 문서화를 위해 Swagger를 활용했습니다.  
+- 작성한 API 명세서를 기반으로 자동화된 UI를 생성하여 클라이언트가 API를 쉽게 테스트하고 사용할 수 있도록 했습니다.  
+- 명세서 기반의 협업을 통해 개발 속도와 효율성을 크게 향상시켰습니다.  
+
 --- 
 
 ## **Settings**
 ### 1. Node.js (18.18.0 LTS)
-- <a href="https://nodejs.org/ko/" target="_blank">Node.js Download</a>  
-- <a href="https://offbyone.tistory.com/441" target="_blank">Node.js Download Reference</a>  
+- <a href="https://nodejs.org/ko/">Node.js Download</a>  
+- <a href="https://offbyone.tistory.com/441">Node.js Download Reference</a>  
 
 ### 2. MongoDB 다운로드
-- <a href="https://www.mongodb.com/try/download/community" target="_blank">MongoDB Download</a>  
-- <a href="https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0" target="_blank">MongoDB Download Reference</a>  
+- <a href="https://www.mongodb.com/try/download/community">MongoDB Download</a>  
+- <a href="https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0">MongoDB Download Reference</a>  
 
 ### 3. 서버 실행 방법
 ```Bash
@@ -145,6 +172,10 @@ const ItemSchema = new Schema({
 ---
 
 ## **Test with JWT Token**
+API 사용 시 GET 요청을 제외한 모든 요청은 인증을 위해 JWT(Json Web Token) 토큰이 필요합니다. <br>
+JWT는 사용자 인증과 권한 부여를 위해 사용되며, 서버와 클라이언트 간의 안전한 정보 교환을 보장합니다. <br>
+이를 통해 무단 접근을 방지하고, API의 보안을 강화할 수 있습니다. <br>
+
 ### 1. 관리자 권한 토큰 ( 기간 30일 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM4MTk2OTcwfQ.EanAuFNrMS3N6YU_L2FG3JbCXfM7-F0i0DpeCgGbad0
