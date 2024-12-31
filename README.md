@@ -268,7 +268,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 ![image](https://github.com/user-attachments/assets/173cbd9d-35e9-4565-9981-a885bfb53898)
 
 <br>
+
 ---
+
 <br>
 
 ## **API URI Collection**
@@ -279,10 +281,11 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 <img src="https://github.com/user-attachments/assets/57f02ee0-db1b-42f0-8163-eff434d313f7" alt="Postman Test Result" width="400"height="400">
 
 <br>
-### Swagger URI Collection
-![image](https://github.com/user-attachments/assets/705fd70e-bd90-4194-99cb-8e48f663a3d2)
-## API Endpoints
 
+### Swagger URI Collection
+![image](https://github.com/user-attachments/assets/ca3eaeb6-e45d-4d03-937e-bbd7957bf27a)
+
+## API Endpoints
 ### Items Management
 
 #### **GET** `/items`
