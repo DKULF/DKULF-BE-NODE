@@ -10,14 +10,14 @@
 [MongoDB 다운로드 참고](https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
 
 ### 3. 서버 실행
-```ruby
+```Bash
 git clone https://github.com/DKULF/DKULF-BE-NODE.git
 ```
-```ruby
+```Bash
 npm install
 ```
-```ruby
-node app.js
+```Bash
+npm run dev
 ```
 
 ### 4. 테스트를 위한 JWT 토큰
