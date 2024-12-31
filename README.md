@@ -19,6 +19,97 @@ npm install
 ```Bash
 npm run dev
 ```
+<br>
+
+## Config
+### MongoDB config by using mongoose library
+```JS
+const mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/DKULF');
+const db = mongoose.connection;
+db.on("error", console.error.bind(console,"connection errors : "));
+db.once("open",() => {
+    console.log("DKULF Database Connected!");
+});
+```
+<br>
+
+### Item Schema
+```JS
+const ItemSchema = new Schema({
+    name : {
+        type : String,
+        required : true
+    },
+    tags : [ { type : String } ],
+    status : Boolean,
+    createdAt : String,
+    image : String,
+})
+```
+**`Item Schema`**는 분실물 정보를 나타내는 데이터 모델입니다. 아래는 이 스키마의 속성들에 대한 설명입니다.
+
+### Item 객체 속성
+
+| 속성명         | 타입          | 설명                                                                 |
+|----------------|---------------|----------------------------------------------------------------------|
+| **`name`**     | `String`      | 분실물의 이름 (필수).                                                |
+| **`tags`**     | `Array[String]` | 분실물의 특징을 설명하는 태그들의 배열.                             |
+| **`status`**   | `Boolean`     | 분실물의 상태 (보관 중이면 `true`, 수령 완료이면 `false`).           |
+| **`createdAt`**| `String`      | 분실물이 등록된 날짜 (형식: 문자열).                                 |
+| **`image`**    | `String`      | 분실물의 이미지 파일명 (16진수 난수로 생성된 파일명이 저장됨).     |
+
+
+
+### API Response Schema
+
+**`Item` Schema**는 분실물 데이터를 API 응답에서 나타내는 구조를 정의합니다.
+
+### Item 객체 속성
+
+| 속성명           | 타입       | 설명                                                                 |
+|------------------|------------|----------------------------------------------------------------------|
+| **`_id`**        | `string`   | 분실물 고유 식별자 (Primary Key).                                    |
+| **`name`**       | `string`   | 분실물의 이름.                                                      |
+| **`tags`**       | `array`    | 분실물의 특징을 설명하는 태그 배열.                                   |
+| **`status`**     | `boolean`  | 분실물의 상태를 나타냅니다:                                           |
+|                  |            | - `true`: 보관 중                                                   |
+|                  |            | - `false`: 수령 완료                                                |
+| **`createdAt`**  | `string`   | 분실물이 등록된 날짜.                                               |
+| **`image`**      | `object`   | 분실물의 이미지 파일 정보.                                           |
+
+### Image 객체 속성
+
+| 속성명             | 타입       | 설명                                                                 |
+|--------------------|------------|----------------------------------------------------------------------|
+| **`data`**         | `string`   | Base64로 인코딩된 이미지 파일 데이터.                                |
+| **`ext`**          | `string`   | 이미지 파일의 확장자 (예: `.png`, `.jpg`).                          |
+| **`contentType`**  | `string`   | 이미지 파일의 MIME 타입 (예: `image/png`). 
+
+<br>
+
+### API Error Schema
+
+**`Error`** 스키마는 API 응답에서 발생한 오류에 대한 정보를 나타냅니다.
+
+### Error 객체 속성
+
+| 속성명        | 타입       | 설명                                |
+|---------------|------------|-------------------------------------|
+| **`success`** | `boolean`  | 요청이 성공했는지 여부 (`true` 또는 `false`). |
+| **`statusCode`** | `integer` | HTTP 상태 코드 (예: `400`, `404`, `500`). |
+| **`message`** | `string`   | 오류에 대한 설명 메시지.             |
+
+
+### Swagger Ui Config
+```JS
+const swaggerUi =  require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerSpec = YAML.load(path.join(__dirname, './build/swagger.yaml'))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+```
+
+
 
 ### 4. 테스트를 위한 JWT 토큰
 #### 4-1. 관리자 권한 토큰 ( 기간 30일 )
