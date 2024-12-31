@@ -220,7 +220,7 @@ const ItemSchema = new Schema({
 
 ---
 
-## **Test with JWT Token**
+## **Test JWT Authentication**
 API 사용 시 GET 요청을 제외한 모든 요청은 인증을 위해 JWT(Json Web Token) 토큰이 필요합니다. <br>
 JWT는 사용자 인증과 권한 부여를 위해 사용되며, 서버와 클라이언트 간의 안전한 정보 교환을 보장합니다. <br>
 이를 통해 무단 접근을 방지하고, API의 보안을 강화할 수 있습니다. <br>
@@ -267,9 +267,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 #### 5. 관리자 권한 토큰으로 관리자 API에 정상적으로 접근하는 경우 ( 1번 토큰 이용 )
 ![image](https://github.com/user-attachments/assets/173cbd9d-35e9-4565-9981-a885bfb53898)
 
-
+<br>
 ---
-
+<br>
 
 ## **API URI Collection**
 ### Register Item ( Test Page )
@@ -277,7 +277,6 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 - 해당 URL을 통해 테스트 페이지에서 분실물 등록이 가능합니다.
 <img src="https://github.com/user-attachments/assets/7d96ac36-c3fa-4bc1-8470-9527aa9e489b" alt="Register Item Form" width="400" height="400">
 <img src="https://github.com/user-attachments/assets/57f02ee0-db1b-42f0-8163-eff434d313f7" alt="Postman Test Result" width="400"height="400">
-
 
 ---
 
