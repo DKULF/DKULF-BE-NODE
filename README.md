@@ -1,4 +1,4 @@
-<h1 align="center">$\bf{\large{\color{#6580DD} DKULF-BE-NODE }}$</h1>
+<h1 align="center">$\bf{\large{\color{#6580DD} DKULF \ Backend \ Resource \ Server }}$</h1>
 
 ## 개발 환경
 ### Main Dependency
@@ -44,7 +44,7 @@
 - <a href="https://nodejs.org/ko/">Node.js Download</a>  
 - <a href="https://offbyone.tistory.com/441">Node.js Download Reference</a>  
 
-### 2. MongoDB 다운로드
+### 2. MongoDB
 - <a href="https://www.mongodb.com/try/download/community">MongoDB Download</a>  
 - <a href="https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0">MongoDB Download Reference</a>  
 
