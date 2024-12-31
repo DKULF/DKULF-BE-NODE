@@ -25,10 +25,16 @@ node app.js
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM4MTk2OTcwfQ.EanAuFNrMS3N6YU_L2FG3JbCXfM7-F0i0DpeCgGbad0
 ```
+- Admin Payload
+![image](https://github.com/user-attachments/assets/49354d45-3f55-47ea-a0e7-b06b5eb4f3ee)
+  
 #### 4-2. 유저 용 토큰 ( 기간 30일 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM1NjA1MzM4LCJleHAiOjE3MzgxOTczMzh9.hr2xPuDMpacD4WYSTWcfbZCRkyPYgJLfuN1dQ-rs3JA
 ```
+- User Payload
+![image](https://github.com/user-attachments/assets/11cd04a3-1de3-4c6e-b2ca-a3d94c9d5300)
+ 
 #### 4-3. 기간 만료 된 토큰 ( 테스트 용 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM1NjA0OTY5fQ.cCCQ0WzPu3SjypPNTxnQbTj5r-iiXOC4LUjeVfKbT10
