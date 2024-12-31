@@ -37,9 +37,9 @@ db.once("open",() => {
     console.log("DKULF Database Connected!");
 });
 ```
-- mongoose.connect: MongoDB 서버와 연결을 설정합니다. 로컬의 DKULF 데이터베이스에 연결합니다.
-- db.on("error"): 연결 오류 발생 시 오류를 콘솔에 출력합니다.
-- db.once("open"): 데이터베이스 연결이 성공하면 "DKULF Database Connected!" 메시지를 출력합니다.
+- **mongoose.connect**: MongoDB 서버와 연결을 설정합니다. 로컬의 DKULF 데이터베이스에 연결합니다.
+- **db.on("error")**: 연결 오류 발생 시 오류를 콘솔에 출력합니다.
+- **db.once("open")**: 데이터베이스 연결이 성공하면 "DKULF Database Connected!" 메시지를 출력합니다.
 
 <br>
 
@@ -53,11 +53,11 @@ const YAML = require('yamljs');
 const swaggerSpec = YAML.load(path.join(__dirname, './build/swagger.yaml'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ```
-- swagger-ui-express: Swagger UI를 Express 애플리케이션에 통합합니다.
-- yamljs: YAML 형식의 Swagger 파일을 읽어옵니다.
-- swaggerSpec: swagger.yaml 파일을 불러와 Swagger UI 설정에 사용합니다.
-- app.use('/api-docs'): Swagger UI를 /api-docs 경로에서 제공하여 API 문서를 확인할 수 있습니다.
-- Swagger - http://localhost:8081/api-docs
+- **swagger-ui-express**: Swagger UI를 Express 애플리케이션에 통합합니다.
+- **yamljs**: YAML 형식의 Swagger 파일을 읽어옵니다.
+- **swaggerSpec**: swagger.yaml 파일을 불러와 Swagger UI 설정에 사용합니다.
+- **app.use('/api-docs')**: Swagger UI를 /api-docs 경로에서 제공하여 API 문서를 확인할 수 있습니다.
+- **Swagger** - http://localhost:8081/api-docs
 
 <br>
 
