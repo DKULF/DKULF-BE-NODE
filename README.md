@@ -278,5 +278,41 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 <img src="https://github.com/user-attachments/assets/7d96ac36-c3fa-4bc1-8470-9527aa9e489b" alt="Register Item Form" width="400" height="400">
 <img src="https://github.com/user-attachments/assets/57f02ee0-db1b-42f0-8163-eff434d313f7" alt="Postman Test Result" width="400"height="400">
 
+<br>
+### Swagger URI Collection
+![image](https://github.com/user-attachments/assets/705fd70e-bd90-4194-99cb-8e48f663a3d2)
+## API Endpoints
+
+### Items Management
+
+#### **GET** `/items`
+- **Description**: Retrieve all item data.
+- **Authentication**: Not required.
+
+#### **GET** `/item/{itemId}`
+- **Description**: Retrieve details of a specific item by its ID.
+- **Authentication**: Not required.
+
+#### **GET** `/items/{keyword}`
+- **Description**: Search for items based on a keyword.
+- **Authentication**: Not required.
+
+#### **POST** `/item`
+- **Description**: Add a new item.
+- **Authentication**: Required (JWT).
+
+### Admin Actions
+
+#### **PATCH** `/admin/item/{itemId}`
+- **Description**: Update the status of an item.
+- **Authentication**: Required (Admin JWT).
+
+#### **DELETE** `/admin/item/{itemId}`
+- **Description**: Delete an item and its associated image.
+- **Authentication**: Required (Admin JWT).
+
+#### **DELETE** `/admin/items`
+- **Description**: Delete all items and their associated image files.
+- **Authentication**: Required (Admin JWT).
 ---
 
