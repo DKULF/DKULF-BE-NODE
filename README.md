@@ -1,4 +1,4 @@
-# DKULF-BE-NODE
+<h1 align="center">$\bf{\large{\color{#6580DD} DKULF-BE-NODE }}$</h1>
 
 ## **Settings**
 ### 1. Node.js ( 18.18.0 LTS )
@@ -111,7 +111,7 @@ const ItemSchema = new Schema({
 <br>
 
 ## **Test with JWT Token**
-### 1.관리자 권한 토큰 ( 기간 30일 )
+### 1. 관리자 권한 토큰 ( 기간 30일 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM4MTk2OTcwfQ.EanAuFNrMS3N6YU_L2FG3JbCXfM7-F0i0DpeCgGbad0
 ```
@@ -121,7 +121,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 ```
 <br>
 
-### 2.유저 권한 토큰 ( 기간 30일 )
+### 2. 유저 권한 토큰 ( 기간 30일 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM1NjA1MzM4LCJleHAiOjE3MzgxOTczMzh9.hr2xPuDMpacD4WYSTWcfbZCRkyPYgJLfuN1dQ-rs3JA
 ```
@@ -131,7 +131,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM
 ```
 <br>
 
-### 3.기간 만료 된 토큰 ( 테스트 용 )
+### 3. 기간 만료 된 토큰 ( 테스트 용 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM1NjA0OTY5fQ.cCCQ0WzPu3SjypPNTxnQbTj5r-iiXOC4LUjeVfKbT10
 ```
