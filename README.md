@@ -47,7 +47,7 @@ const ItemSchema = new Schema({
     image : String,
 })
 ```
-**`Item Schema`**는 분실물 정보를 나타내는 데이터 모델입니다. 아래는 이 스키마의 속성들에 대한 설명입니다.
+**Item Schema**는 분실물 정보를 나타내는 데이터 모델입니다. 아래는 이 스키마의 속성들에 대한 설명입니다.
 
 ### Item 객체 속성
 
@@ -60,10 +60,11 @@ const ItemSchema = new Schema({
 | **`image`**    | `String`      | 분실물의 이미지 파일명 (16진수 난수로 생성된 파일명이 저장됨).     |
 
 
+<br>
 
 ### API Response Schema
 
-**`Item` Schema**는 분실물 데이터를 API 응답에서 나타내는 구조를 정의합니다.
+**Item Schema**는 분실물 데이터를 API 응답에서 나타내는 구조를 정의합니다.
 
 ### Item 객체 속성
 
@@ -72,9 +73,7 @@ const ItemSchema = new Schema({
 | **`_id`**        | `string`   | 분실물 고유 식별자 (Primary Key).                                    |
 | **`name`**       | `string`   | 분실물의 이름.                                                      |
 | **`tags`**       | `array`    | 분실물의 특징을 설명하는 태그 배열.                                   |
-| **`status`**     | `boolean`  | 분실물의 상태를 나타냅니다:                                           |
-|                  |            | - `true`: 보관 중                                                   |
-|                  |            | - `false`: 수령 완료                                                |
+| **`status`**     | `boolean`  | 분실물의 상태 (보관 중이면 `true`, 수령 완료이면 `false`).             |
 | **`createdAt`**  | `string`   | 분실물이 등록된 날짜.                                               |
 | **`image`**      | `object`   | 분실물의 이미지 파일 정보.                                           |
 
@@ -90,7 +89,7 @@ const ItemSchema = new Schema({
 
 ### API Error Schema
 
-**`Error`** 스키마는 API 응답에서 발생한 오류에 대한 정보를 나타냅니다.
+**Error Schema**는 API 응답에서 발생한 오류에 대한 정보를 나타냅니다.
 
 ### Error 객체 속성
 
@@ -100,6 +99,7 @@ const ItemSchema = new Schema({
 | **`statusCode`** | `integer` | HTTP 상태 코드 (예: `400`, `404`, `500`). |
 | **`message`** | `string`   | 오류에 대한 설명 메시지.             |
 
+<br>
 
 ### Swagger Ui Config
 ```JS
