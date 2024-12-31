@@ -249,26 +249,9 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM1NjA0OTY5fQ.cCCQ0WzPu3SjypPNTxnQbTj5r-iiXOC4LUjeVfKbT10
 ```
-
 <br>
 
----
-
-## **API URI Collection**
-
-
----
-
-<br>
-
-## **Test with Postman**
-### Register Item ( Test Page )
-- http://localhost:8081/
-- 해당 URL을 통해 테스트 페이지에서 분실물 등록이 가능합니다.
-<img src="https://github.com/user-attachments/assets/7d96ac36-c3fa-4bc1-8470-9527aa9e489b" alt="Register Item Form" width="400" height="400">
-<img src="https://github.com/user-attachments/assets/57f02ee0-db1b-42f0-8163-eff434d313f7" alt="Postman Test Result" width="400"height="400">
-
-### 토큰에 대한 인증 미들웨어 테스트
+### 4. PostMan을 이용한 인증 미들웨어 테스트
 #### 1. 헤더에 토큰이 없는 경우
 ![image](https://github.com/user-attachments/assets/6f1f74a4-44f7-45ec-896a-d2d68b4b6fdf)
 
@@ -284,8 +267,17 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 #### 5. 관리자 권한 토큰으로 관리자 API에 정상적으로 접근하는 경우 ( 1번 토큰 이용 )
 ![image](https://github.com/user-attachments/assets/173cbd9d-35e9-4565-9981-a885bfb53898)
 
+
 ---
 
-## **Test with Swagger**
-- http://localhost:8081/api-docs
+
+## **API URI Collection**
+### Register Item ( Test Page )
+- http://localhost:8081/
+- 해당 URL을 통해 테스트 페이지에서 분실물 등록이 가능합니다.
+<img src="https://github.com/user-attachments/assets/7d96ac36-c3fa-4bc1-8470-9527aa9e489b" alt="Register Item Form" width="400" height="400">
+<img src="https://github.com/user-attachments/assets/57f02ee0-db1b-42f0-8163-eff434d313f7" alt="Postman Test Result" width="400"height="400">
+
+
+---
 
