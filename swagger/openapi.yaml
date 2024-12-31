@@ -2,7 +2,26 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: DKULF Item API docs
-  description: DKULF RESOURCE SERVER SEMINAR
+  description: |
+    GET 요청을 제외하고 API를 사용하려면 JWT 토큰이 필요합니다.
+    
+    ### 관리자 권한 토큰
+    ```
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM4MTk2OTcwfQ.EanAuFNrMS3N6YU_L2FG3JbCXfM7-F0i0DpeCgGbad0
+    ```
+
+    ### 유저 권한 토큰
+    ```
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM1NjA1MzM4LCJleHAiOjE3MzgxOTczMzh9.hr2xPuDMpacD4WYSTWcfbZCRkyPYgJLfuN1dQ-rs3JA
+    ```
+
+    ### 만료된 토큰 (테스트 용)
+    ```
+    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM1NjA0OTY5fQ.cCCQ0WzPu3SjypPNTxnQbTj5r-iiXOC4LUjeVfKbT10
+    ```
+
+    위의 토큰들을 Authorize를 클릭하여 추가한 다음 API를 호출하세요.
+
 servers:
   - url: http://localhost:8081/
 components:
@@ -17,7 +36,9 @@ components:
           type: string
           description: 분실물 이름
         tags:
-          type: string array
+          type: array
+          items:
+            type: string
           description: 분실물 특징 태그들
         status:
           type: boolean
@@ -26,167 +47,98 @@ components:
           type: string
           description: 분실물 등록 날짜
         image:
-          data:
-            type: string
-            description: 분실물 사진 파일에 대한 base64 문자열 데이터
-          ext:
-            type: string
-            description: 사진에 대한 확장자
-          contentType:
-            type: string
-            description: 확장자 및 파일의 Type
+          type: object
+          properties:
+            data:
+              type: string
+              description: 분실물 사진 파일에 대한 base64 문자열 데이터
+            ext:
+              type: string
+              description: 사진에 대한 확장자
+            contentType:
+              type: string
+              description: 확장자 및 파일의 Type
     Error:
       type: object
       properties:
         success:
           type: boolean
         statusCode:
-          type : int
+          type: integer
         message:
           type: string
   examples:
     itemExample:
       value:
-        _id : "67723566c01a2dcec54ba69d"
+        _id: "67723566c01a2dcec54ba69d"
         name: "우산"
-        tags: ["우산","파란색","인문관"]
+        tags: ["우산", "파란색", "인문관"]
         status: true
         createdAt: "2024.12.30"
         image:
           data: "base 64 image file text"
           ext: ".png"
           contentType: "image/png"
-  responses:
-    successResponse:
-      description: successful request with no data
-      content:
-        application/json:
-          schema:
-            type: object
-            example: 
-              status: 200
-              success: true
-              message: "message"
-    TokenExpiredError:
-      description: 토큰 기간 만료 ( Refresh Token 재발급 필요 )
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 499
-            message: 토큰이 만료되었습니다. 다시 로그인 해주세요.
-    ForbiddenError:
-      description: 유효하지 않은 토큰
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 403
-            message: 유효하지 않은 토큰입니다.
-    UnauthorizedError:
-      description: 인증 토큰의 누락
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 401
-            message: 인증 토큰이 필요합니다.
-    PrimaryKeyCastError:
-      description: 형식에 맞지 않는 PK 전달 시 캐스트 에러
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 400
-            message: 유효하지 않은 아이디 형식입니다.
-    NotFoundError:
-      description: 데이터베이스에 존재하지 않는 PK 전달
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 404
-            message: 해당 아이디의 데이터가 존재하지 않습니다.
-    BadRequestNotKeyword:
-      description: Pathvariable 키워드 누락
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 400
-            message: 유효하지 않은 키워드입니다. 검색어를 입력해주세요.
-    BadRequestNotName:
-      description: RequestBody 분실물 이름 누락
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 400
-            message: 분실물에 대한 이름을 입력해주세요.
-    BadRequestNotImage:
-      description: RequestBody 분실물 사진 파일 누락
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 400
-            message: 분실물에 대한 사진을 등록해주세요.
-    InternalServerError:
-      description: 서버 에러
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Error"
-          example:
-            success: false
-            statusCode: 500
-            message: 데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+security:
+  - BearerAuth: []
+
 paths:
   /items:
     get:
       summary: 모든 분실물 데이터 조회
       responses:
         '200':
-          description: Successfully retrieved user data
+          description: Successfully retrieved item data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/item'
-              examples:
-                userExample: 
-                  $ref: '#/components/examples/itemExample'
-  /item:
-    post:
-      summary: 새로운 분실물 등록
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/item'
-      responses:
-        '201':
-          description: User successfully created
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/item'
+              example:
+                success: true
+                count: 2
+                items:
+                  - _id: "6771f251f763dedbd48654da"
+                    name: "우산"
+                    tags: ["우산", "공학관", "검정색"]
+                    status: true
+                    createdAt: "2024.12.30"
+                    image:
+                      data: "IMAGE_FILE_DATA"
+                      ext: ".png"
+                      contentType: "image/png"
+                  - _id: "6771f251f763dedbd48654db"
+                    name: "모자"
+                    tags: ["모자", "회색", "도서관"]
+                    status: false
+                    createdAt: "2024.12.29"
+                    image:
+                      data: "IMAGE_FILE_DATA"
+                      ext: ".jpg"
+                      contentType: "image/jpeg"
+        '500':
+          description: 서버 에러
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/item'
+                $ref: "#/components/schemas/Error"
+              example:
+                success: false
+                statusCode: 500
+                message: 데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.
   /item/{itemId}:
     get:
       summary: 특정 분실물 상세 조회
@@ -197,100 +149,610 @@ paths:
           description: ID of the Item
           schema:
             type: string
+            example: "6771f251f763dedbd48654da"
       responses:
         '200':
-          description: Successfully retrieved specific user data
+          description: Successfully retrieved specific item data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/item'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  item:
+                    $ref: '#/components/schemas/item'
+              example:
+                success: true
+                item:
+                  _id: "6771f251f763dedbd48654da"
+                  name: "우산"
+                  tags: ["우산", "공학관", "검정색"]
+                  status: true
+                  createdAt: "2024.12.30"
+                  image:
+                    data: "IMAGE_FILE_DATA"
+                    ext: ".png"
+                    contentType: "image/png"
+        '400':
+          description: 유효하지 않은 아이디 형식
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                success: false
+                statusCode: 400
+                message: 유효하지 않은 아이디 형식입니다.
         '404':
-          description: User not found
+          description: 해당 아이디의 데이터가 존재하지 않음
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
-  /admin/item/{itemId}:
-    patch:
-      summary: 분실물 상태 업데이트
+                $ref: "#/components/schemas/Error"
+              example:
+                success: false
+                statusCode: 404
+                message: 해당 아이디의 데이터가 존재하지 않습니다.
+        '500':
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              example:
+                success: false
+                statusCode: 500
+                message: 데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.
+  /items/{keyword}:
+    get:
+      summary: 검색 키워드를 기반으로 분실물 조회
       parameters:
-        - name: itemId
+        - name: keyword
           in: path
           required: true
-          description: ID of the Item
+          description: 검색할 키워드
           schema:
             type: string
       responses:
         '200':
-          description: Successfully retrieved specific user data
+          description: 검색된 분실물 목록
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/item'
-        '404':
-          description: User not found
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  count:
+                    type: integer
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/item'
+              examples:
+                resultFound:
+                  value:
+                    success: true
+                    count: 1
+                    items:
+                      - _id: "6771f251f763dedbd48654da"
+                        name: "우산"
+                        tags:
+                          - "우산"
+                          - "공학관"
+                          - "검정색"
+                        status: true
+                        createdAt: "2024.12.30"
+                        image:
+                          data: "IMAGE_DATA"
+                          ext: ".png"
+                          contentType: "image/png"
+                        __v: 0
+                noResultFound:
+                  value:
+                    success: true
+                    count: 0
+                    items: []
+        '400':
+          description: 잘못된 키워드
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-    delete:
-      summary: 특정 분실물 삭제
+              example:
+                success: false
+                statusCode: 400
+                message: "유효하지 않은 키워드입니다. 검색어를 입력해주세요."
+        '500':
+          description: 서버 처리 중 오류
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                success: false
+                statusCode: 500
+                message: "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+  /item:
+    post:
+      summary: 새로운 분실물 등록
+      description: 사용자가 새로운 분실물을 등록할 수 있습니다. 이미지 파일을 함께 업로드해야 합니다.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: "분실물의 이름 (예: 우산)"
+                  example: 우산
+                tags:
+                  type: string
+                  description: "분실물과 관련된 태그들, 쉼표로 구분 (예: 우산, 공학관, 검정색)"
+                  example: 우산, 공학관, 검정색
+                image:
+                  type: string
+                  format: binary
+                  description: 분실물의 이미지 파일 (최대 5MB 크기 제한, 이미지 파일만 허용)
+            encoding:
+              image:
+                contentType: image/*
+      responses:
+        '201':
+          description: 분실물 등록이 성공적으로 완료됨
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  statusCode:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: "분실물 등록이 완료되었습니다."
+        '499':
+          description: 토큰 만료
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 499
+                  message:
+                    type: string
+                    example: "토큰이 만료되었습니다. 다시 로그인 해주세요."
+        '403':
+          description: 유효하지 않은 토큰
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 403
+                  message:
+                    type: string
+                    example: "유효하지 않은 토큰입니다."
+        '401':
+          description: 인증 토큰의 누락
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: "인증 토큰이 필요합니다."
+        '400':
+          description: 잘못된 요청, 사진이 없는 요청, 이미지 파일 크기 초과, 잘못된 이미지 형식
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: "분실물에 대한 이름을 입력해주세요."
+        '500':
+          description: 서버 오류 (이미지 처리 실패, 데이터 처리 실패)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "서버 오류가 발생하였습니다. 다시 시도해주세요."
+                  errorDetails:
+                    type: string
+                    example: "이미지 처리 실패"
+
+  /admin/item/{itemId}:
+    patch:
+      summary: 분실물 상태 업데이트
+      description: 관리자가 특정 분실물의 상태를 업데이트할 수 있습니다. 상태 값은 true/false로 변경할 수 있습니다.
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: 업데이트할 분실물의 고유 ID
+          schema:
+            type: string
+            example: "6771f251f763dedbd48654da"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/item'
+              type: object
+              properties:
+                status:
+                  type: boolean
+                  description: "분실물의 상태 (예: false로 설정하면 분실물 상태를 수령 완료로 변경 )"
+                  example: false
       responses:
-        '201':
-          description: User successfully created
+        '200':
+          description: 분실물 상태가 성공적으로 업데이트됨
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/item'
-  /admin/items:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  statusCode:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "분실물 상태가 성공적으로 업데이트 되었습니다."
+        '499':
+          description: 토큰 만료
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 499
+                  message:
+                    type: string
+                    example: "토큰이 만료되었습니다. 다시 로그인 해주세요."
+        '403':
+          description: 유효하지 않은 토큰, 관리자 접근 제한
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 403
+                  message:
+                    type: string
+                    example: "유효하지 않은 토큰입니다."
+        '401':
+          description: 인증 토큰의 누락
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: "인증 토큰이 필요합니다."
+        '400':
+          description: 잘못된 요청 (유효하지 않은 아이디 형식 등, 상태 값이 없거나 잘못된 상태 값 )
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: "유효하지 않은 아이디 형식입니다."
+        '404':
+          description: 해당 아이디의 데이터가 존재하지 않음
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "해당 아이디의 데이터가 존재하지 않습니다."
+        '500':
+          description: 서버 오류 (데이터 처리 실패)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
     delete:
-      summary: 모든 분실물 삭제
+      summary: 분실물 및 이미지 삭제
+      description: 관리자가 특정 분실물과 해당 이미지 파일을 삭제할 수 있습니다.
+      security:
+        - BearerAuth: []
       parameters:
         - name: itemId
           in: path
           required: true
-          description: ID of the Item
+          description: 삭제할 분실물의 고유 ID
           schema:
             type: string
+            example: "6771f251f763dedbd48654da"
       responses:
         '200':
-          description: Successfully retrieved specific user data
+          description: 아이템과 이미지가 성공적으로 삭제됨
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/item'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  statusCode:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "아이템과 해당 이미지 파일이 삭제되었습니다."
+        '499':
+          description: 토큰 만료
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 499
+                  message:
+                    type: string
+                    example: "토큰이 만료되었습니다. 다시 로그인 해주세요."
+        '403':
+          description: 유효하지 않은 토큰, 관리자 접근 제한
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 403
+                  message:
+                    type: string
+                    example: "유효하지 않은 토큰입니다."
+        '401':
+          description: 인증 토큰의 누락
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: "인증 토큰이 필요합니다."
+        '400':
+          description: 잘못된 요청 (유효하지 않은 아이디 형식 등)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: "유효하지 않은 아이디 형식입니다."
         '404':
-          description: User not found
+          description: 해당 아이디의 데이터가 존재하지 않음
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'                  
-  /items/{keyword}:
-      get:
-        summary: Get specific user data by ID
-        parameters:
-          - name: itemId
-            in: path
-            required: true
-            description: ID of the Item
-            schema:
-              type: string
-        responses:
-          '200':
-            description: Successfully retrieved specific user data
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/item'
-          '404':
-            description: User not found
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: "해당 아이디의 데이터가 존재하지 않습니다."
+        '500':
+          description: 서버 오류 (데이터 처리 실패)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+  /admin/items:
+    delete:
+      summary: 모든 분실물 및 이미지 파일 삭제
+      description: 관리자가 모든 분실물과 해당 이미지 파일을 삭제할 수 있습니다.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: 모든 분실물과 이미지가 성공적으로 삭제됨
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  statusCode:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: "모든 분실물과 해당 이미지 파일이 삭제되었습니다."
+        '499':
+          description: 토큰 만료
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 499
+                  message:
+                    type: string
+                    example: "토큰이 만료되었습니다. 다시 로그인 해주세요."
+        '403':
+          description: 유효하지 않은 토큰, 관리자 접근 제한
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 403
+                  message:
+                    type: string
+                    example: "유효하지 않은 토큰입니다."
+        '401':
+          description: 인증 토큰의 누락
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: "인증 토큰이 필요합니다."
+        '500':
+          description: 서버 오류 (데이터 처리 실패)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  statusCode:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+
+
