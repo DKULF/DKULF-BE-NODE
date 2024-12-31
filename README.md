@@ -1,6 +1,6 @@
 # DKULF-BE-NODE
 
-## Settings
+## **Settings**
 ### 1. Node.js ( 18.18.0 LTS )
 [Node.js 다운로드](https://nodejs.org/ko/) <br>
 [Node.js 다운로드 참고](https://offbyone.tistory.com/441)
@@ -21,7 +21,7 @@ npm run dev
 ```
 <br>
 
-## Config
+## **Config**
 ### MongoDB config by using mongoose library
 ```JS
 const mongoose = require('mongoose');
@@ -43,7 +43,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ```
 <br>
 
-## Item Schema
+## **Item Schema**
 ```JS
 const ItemSchema = new Schema({
     name : {
@@ -71,7 +71,7 @@ const ItemSchema = new Schema({
 
 <br>
 
-## API Response Schema
+## **API Response Schema**
 
 **Item Schema**는 분실물 데이터를 API 응답에서 나타내는 구조를 정의합니다.
 
@@ -96,7 +96,7 @@ const ItemSchema = new Schema({
 
 <br>
 
-## API Error Schema
+## **API Error Schema**
 
 **Error Schema**는 API 응답에서 발생한 오류에 대한 정보를 나타냅니다.
 
@@ -110,8 +110,8 @@ const ItemSchema = new Schema({
 
 <br>
 
-### 4. 테스트를 위한 JWT 토큰
-#### 4-1. 관리자 권한 토큰 ( 기간 30일 )
+## **Test with JWT Token**
+### 1.관리자 권한 토큰 ( 기간 30일 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM4MTk2OTcwfQ.EanAuFNrMS3N6YU_L2FG3JbCXfM7-F0i0DpeCgGbad0
 ```
@@ -121,7 +121,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 ```
 <br>
 
-#### 4-2. 유저 권한 토큰 ( 기간 30일 )
+### 2.유저 권한 토큰 ( 기간 30일 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM1NjA1MzM4LCJleHAiOjE3MzgxOTczMzh9.hr2xPuDMpacD4WYSTWcfbZCRkyPYgJLfuN1dQ-rs3JA
 ```
@@ -131,13 +131,13 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM
 ```
 <br>
 
-#### 4-3. 기간 만료 된 토큰 ( 테스트 용 )
+### 3.기간 만료 된 토큰 ( 테스트 용 )
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM1NjA0OTY5fQ.cCCQ0WzPu3SjypPNTxnQbTj5r-iiXOC4LUjeVfKbT10
 ```
 <br>
 
-## Test with Postman
+## **Test with Postman**
 ### Register Item ( Test Page )
 - http://localhost:8081/
 - 해당 URL을 통해 테스트 페이지에서 분실물 등록이 가능합니다.
@@ -148,19 +148,19 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 #### 1. 헤더에 토큰이 없는 경우
 ![image](https://github.com/user-attachments/assets/6f1f74a4-44f7-45ec-896a-d2d68b4b6fdf)
 
-#### 2. 기간이 만료 된 토큰인 경우 ( 4-3 토큰 이용 )
+#### 2. 기간이 만료 된 토큰인 경우 ( 3번번 토큰 이용 )
 ![image](https://github.com/user-attachments/assets/6f1157b9-8e54-4239-95fc-f79e8ceeda55)
 
 #### 3. 유효하지 않은 토큰인 경우  
 ![image](https://github.com/user-attachments/assets/3b3a5fad-e22d-4221-9331-cd4cb2b72612)
 
-#### 4, 유저 권한 토큰으로 관리자 API 접근 하는 경우 ( 4-2 토큰 이용 )
+#### 4, 유저 권한 토큰으로 관리자 API 접근 하는 경우 ( 2번번 토큰 이용 )
 ![image](https://github.com/user-attachments/assets/b943b741-6f8f-4cc0-92e4-18c1b0e9a6f3)
 
-#### 5. 관리자 권한 토큰으로 관리자 API에 정상적으로 접근하는 경우 ( 4-1 토큰 이용 )
+#### 5. 관리자 권한 토큰으로 관리자 API에 정상적으로 접근하는 경우 ( 1번 토큰 이용 )
 ![image](https://github.com/user-attachments/assets/173cbd9d-35e9-4565-9981-a885bfb53898)
 
 
-## Test with Swagger
+## **Test with Swagger**
 - http://localhost:8081/api-docs
 
