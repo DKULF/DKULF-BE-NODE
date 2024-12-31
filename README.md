@@ -13,13 +13,13 @@
 --- 
 
 ## **Settings**
-### 1. Node.js (18.18.0 LTS)  
-- [Node.js Download](https://nodejs.org/ko/){:target="_blank"}  
-- [Node.js Download Reference](https://offbyone.tistory.com/441){:target="_blank"}  
+### 1. Node.js (18.18.0 LTS)
+- <a href="https://nodejs.org/ko/" target="_blank">Node.js Download</a>  
+- <a href="https://offbyone.tistory.com/441" target="_blank">Node.js Download Reference</a>  
 
-### 2. MongoDB 다운로드  
-- [MongoDB Download](https://www.mongodb.com/try/download/community){:target="_blank"}  
-- [MongoDB Download Reference](https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0){:target="_blank"}  
+### 2. MongoDB 다운로드
+- <a href="https://www.mongodb.com/try/download/community" target="_blank">MongoDB Download</a>  
+- <a href="https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0" target="_blank">MongoDB Download Reference</a>  
 
 ### 3. 서버 실행 방법
 ```Bash
