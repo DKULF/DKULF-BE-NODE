@@ -1,15 +1,27 @@
 <h1 align="center">$\bf{\large{\color{#6580DD} DKULF-BE-NODE }}$</h1>
 
+## 개발 환경
+### Main Dependency
+- [x] Express.js
+- [x] MongoDB
+- [x] Mongoose
+- [x] JsonWebToken
+- [x] Swagger
+
+<br>
+
+--- 
+
 ## **Settings**
-### 1. Node.js ( 18.18.0 LTS )
-[Node.js 다운로드](https://nodejs.org/ko/) <br>
-[Node.js 다운로드 참고](https://offbyone.tistory.com/441)
+### 1. Node.js (18.18.0 LTS)  
+- [Node.js Download](https://nodejs.org/ko/){:target="_blank"}  
+- [Node.js Download Reference](https://offbyone.tistory.com/441){:target="_blank"}  
 
-### 2. MongoDB 다운로드 
-[MongoDB 다운로드](https://www.mongodb.com/try/download/community) <br>
-[MongoDB 다운로드 참고](https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0)
+### 2. MongoDB 다운로드  
+- [MongoDB Download](https://www.mongodb.com/try/download/community){:target="_blank"}  
+- [MongoDB Download Reference](https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0){:target="_blank"}  
 
-### 3. 서버 실행
+### 3. 서버 실행 방법
 ```Bash
 git clone https://github.com/DKULF/DKULF-BE-NODE.git
 ```
@@ -24,7 +36,7 @@ npm run dev
 ---
 
 ## **Config**
-### MongoDB config by using mongoose library
+### MongoDB Config
 
 이 섹션에서는 Node.js에서 Mongoose 라이브러리를 사용하여 MongoDB를 설정하는 방법을 보여줍니다.
 
@@ -63,7 +75,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 ---
 
-## **Item Schema**
+## **Data Schema**
 ```JS
 const ItemSchema = new Schema({
     name : {
@@ -161,6 +173,13 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 <br>
 
 ---
+
+## **API URI Collection**
+
+
+---
+
+<br>
 
 ## **Test with Postman**
 ### Register Item ( Test Page )
