@@ -58,7 +58,7 @@ npm install
 ```Bash
 npm run dev
 ```
-**서버 실행 시 출력 화면**
+- **서버 실행 시 출력 화면**
 ![image](https://github.com/user-attachments/assets/2576507a-8ef4-4d0c-811e-e2de57d81aff)
 
 <br>
@@ -100,6 +100,52 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 - **swaggerSpec**: swagger.yaml 파일을 불러와 Swagger UI 설정에 사용합니다.
 - **app.use('/api-docs')**: Swagger UI를 /api-docs 경로에서 제공하여 API 문서를 확인할 수 있습니다.
 - **Swagger** - http://localhost:8081/api-docs
+
+<br>
+
+### JWT Authentication Middleware
+
+이 섹션에서는 Node.js에서 jsonwebtoken 라이브러리를 사용하여 인증 미들웨어 구현 형태를 보여줍니다.
+
+```JS
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = 'SECRET_KEY';
+
+const authenticateJWT = async (req, res, next) => {
+
+    if (req.method === 'GET' || req.url.includes('/test')) {
+        return next();
+    }
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return ErrorMessage...
+    }
+    
+    const token = authHeader.split(' ')[1];
+    try {
+        const decodeToken = jwt.decode(token);
+        const role = decodeToken.roles[0];
+
+        if (req.url.includes('/admin')) {
+            return ErrorMessage...
+        }
+        jwt.verify(token, JWT_SECRET, { algorithms: ['HS256'] });       
+        next();
+    } catch (err) {
+        if (err.name === 'TokenExpiredError') {
+             return ErrorMessage...
+        }
+        return ErrorMessage...
+    }
+};
+```
+- **JWT 인증**: `jsonwebtoken` 라이브러리를 사용하여 API 요청의 JWT 토큰을 검증.  
+- **예외 처리**: GET 요청 및 특정 경로(`/test`, `/admin`)에 대해 인증 로직을 조건부 적용.  
+- **역할 기반 권한 부여**: 디코드된 토큰의 역할(`roles`)을 검사하여 관리자 및 일반 사용자의 접근 권한 관리.  
+- **유효성 검사**: 토큰 유효성(`verify`)과 만료 시간(`TokenExpiredError`)을 확인하여 보안을 강화.  
+- **Middleware Integration**: Express 미들웨어로 구현되어 요청을 사전에 검증, 코드의 일관성과 재사용성 확보.  
 
 <br>
 
