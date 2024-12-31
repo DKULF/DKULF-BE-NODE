@@ -67,3 +67,6 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 #### 4, 유저 권한 토큰으로 관리자 API 접근 하는 경우 ( 4-2 토큰 이용 )
 ![image](https://github.com/user-attachments/assets/b943b741-6f8f-4cc0-92e4-18c1b0e9a6f3)
 
+#### 5. 관리자 권한 토큰으로 관리자 API에 정상적으로 접근하는 경우 ( 4-1 토큰 이용 )
+![image](https://github.com/user-attachments/assets/173cbd9d-35e9-4565-9981-a885bfb53898)
+
