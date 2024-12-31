@@ -93,7 +93,7 @@ paths:
       summary: 모든 분실물 데이터 조회
       responses:
         '200':
-          description: Successfully retrieved item data
+          description: 모든 분실물 데이터 획득
           content:
             application/json:
               schema:
@@ -152,7 +152,7 @@ paths:
             example: "6771f251f763dedbd48654da"
       responses:
         '200':
-          description: Successfully retrieved specific item data
+          description: 특정 분실물 데이터 획득
           content:
             application/json:
               schema:
