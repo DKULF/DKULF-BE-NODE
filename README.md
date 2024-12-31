@@ -34,7 +34,16 @@ db.once("open",() => {
 ```
 <br>
 
-### Item Schema
+### Swagger Ui Config
+```JS
+const swaggerUi =  require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerSpec = YAML.load(path.join(__dirname, './build/swagger.yaml'))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+```
+<br>
+
+## Item Schema
 ```JS
 const ItemSchema = new Schema({
     name : {
@@ -62,7 +71,7 @@ const ItemSchema = new Schema({
 
 <br>
 
-### API Response Schema
+## API Response Schema
 
 **Item Schema**는 분실물 데이터를 API 응답에서 나타내는 구조를 정의합니다.
 
@@ -87,7 +96,7 @@ const ItemSchema = new Schema({
 
 <br>
 
-### API Error Schema
+## API Error Schema
 
 **Error Schema**는 API 응답에서 발생한 오류에 대한 정보를 나타냅니다.
 
@@ -100,16 +109,6 @@ const ItemSchema = new Schema({
 | **`message`** | `string`   | 오류에 대한 설명 메시지.             |
 
 <br>
-
-### Swagger Ui Config
-```JS
-const swaggerUi =  require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerSpec = YAML.load(path.join(__dirname, './build/swagger.yaml'))
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-```
-
-
 
 ### 4. 테스트를 위한 JWT 토큰
 #### 4-1. 관리자 권한 토큰 ( 기간 30일 )
