@@ -21,6 +21,8 @@ npm run dev
 ```
 <br>
 
+---
+
 ## **Config**
 ### MongoDB config by using mongoose library
 ```JS
@@ -42,6 +44,8 @@ const swaggerSpec = YAML.load(path.join(__dirname, './build/swagger.yaml'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ```
 <br>
+
+---
 
 ## **Item Schema**
 ```JS
@@ -110,6 +114,8 @@ const ItemSchema = new Schema({
 
 <br>
 
+---
+
 ## **Test with JWT Token**
 ### 1. 관리자 권한 토큰 ( 기간 30일 )
 ```Bash
@@ -135,7 +141,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM1NjA0OTY5fQ.cCCQ0WzPu3SjypPNTxnQbTj5r-iiXOC4LUjeVfKbT10
 ```
-<br>
+
+---
 
 ## **Test with Postman**
 ### Register Item ( Test Page )
@@ -160,6 +167,7 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 #### 5. 관리자 권한 토큰으로 관리자 API에 정상적으로 접근하는 경우 ( 1번 토큰 이용 )
 ![image](https://github.com/user-attachments/assets/173cbd9d-35e9-4565-9981-a885bfb53898)
 
+---
 
 ## **Test with Swagger**
 - http://localhost:8081/api-docs
