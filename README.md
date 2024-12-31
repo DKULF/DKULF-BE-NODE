@@ -25,6 +25,9 @@ npm run dev
 
 ## **Config**
 ### MongoDB config by using mongoose library
+
+이 섹션에서는 Node.js에서 Mongoose 라이브러리를 사용하여 MongoDB를 설정하는 방법을 보여줍니다.
+
 ```JS
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/DKULF');
@@ -34,15 +37,28 @@ db.once("open",() => {
     console.log("DKULF Database Connected!");
 });
 ```
+- mongoose.connect: MongoDB 서버와 연결을 설정합니다. 로컬의 DKULF 데이터베이스에 연결합니다.
+- db.on("error"): 연결 오류 발생 시 오류를 콘솔에 출력합니다.
+- db.once("open"): 데이터베이스 연결이 성공하면 "DKULF Database Connected!" 메시지를 출력합니다.
+
 <br>
 
-### Swagger Ui Config
+### Swagger UI 설정
+
+이 섹션에서는 Swagger UI를 설정하여 API 문서를 제공합니다.
+
 ```JS
 const swaggerUi =  require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerSpec = YAML.load(path.join(__dirname, './build/swagger.yaml'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 ```
+- swagger-ui-express: Swagger UI를 Express 애플리케이션에 통합합니다.
+- yamljs: YAML 형식의 Swagger 파일을 읽어옵니다.
+- swaggerSpec: swagger.yaml 파일을 불러와 Swagger UI 설정에 사용합니다.
+- app.use('/api-docs'): Swagger UI를 /api-docs 경로에서 제공하여 API 문서를 확인할 수 있습니다.
+- Swagger - http://localhost:8081/api-docs
+
 <br>
 
 ---
@@ -141,6 +157,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNzM
 ```Bash
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTczNTYwNDk3MCwiZXhwIjoxNzM1NjA0OTY5fQ.cCCQ0WzPu3SjypPNTxnQbTj5r-iiXOC4LUjeVfKbT10
 ```
+
+<br>
 
 ---
 
