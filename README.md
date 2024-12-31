@@ -51,8 +51,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 ### Register Item ( Test Page )
 - http://localhost:8081
 - 해당 URL을 통해 테스트 페이지에서 분실물 등록이 가능합니다.
-![image](https://github.com/user-attachments/assets/7d96ac36-c3fa-4bc1-8470-9527aa9e489b)
-![image](https://github.com/user-attachments/assets/57f02ee0-db1b-42f0-8163-eff434d313f7)
+<img src="https://github.com/user-attachments/assets/7d96ac36-c3fa-4bc1-8470-9527aa9e489b" alt="Register Item Form" width="400">
+<img src="https://github.com/user-attachments/assets/57f02ee0-db1b-42f0-8163-eff434d313f7" alt="Postman Test Result" width="400">
 
 ### 토큰에 대한 인증 미들웨어 테스트
 #### 1. 헤더에 토큰이 없는 경우
