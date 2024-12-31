@@ -32,6 +32,7 @@ npm install
 npm run dev
 ```
 <br>
+![image](https://github.com/user-attachments/assets/52b54803-593a-4e8b-9389-cf8692e07e78)
 
 ---
 
