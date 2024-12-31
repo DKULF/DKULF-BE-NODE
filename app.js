@@ -360,7 +360,7 @@ app.delete('/admin/items', async (req, res) => {
         res.status(200).json({
             statusCode: 200,
             success: true,
-            message: '모든 아이템과 해당 이미지 파일이 삭제되었습니다.'
+            message: '모든 분실물과 해당 이미지 파일이 삭제되었습니다.'
         });
     } catch (err) {
         console.error('Error deleting items:', err);
