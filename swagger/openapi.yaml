@@ -1,0 +1,296 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: DKULF Item API docs
+  description: DKULF RESOURCE SERVER SEMINAR
+servers:
+  - url: http://localhost:8081/
+components:
+  schemas:
+    item:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: 분실물 고유 PK
+        name:
+          type: string
+          description: 분실물 이름
+        tags:
+          type: string array
+          description: 분실물 특징 태그들
+        status:
+          type: boolean
+          description: 분실물 상태 ( true-보관중 / false-수령완료 )
+        createdAt:
+          type: string
+          description: 분실물 등록 날짜
+        image:
+          data:
+            type: string
+            description: 분실물 사진 파일에 대한 base64 문자열 데이터
+          ext:
+            type: string
+            description: 사진에 대한 확장자
+          contentType:
+            type: string
+            description: 확장자 및 파일의 Type
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        statusCode:
+          type : int
+        message:
+          type: string
+  examples:
+    itemExample:
+      value:
+        _id : "67723566c01a2dcec54ba69d"
+        name: "우산"
+        tags: ["우산","파란색","인문관"]
+        status: true
+        createdAt: "2024.12.30"
+        image:
+          data: "base 64 image file text"
+          ext: ".png"
+          contentType: "image/png"
+  responses:
+    successResponse:
+      description: successful request with no data
+      content:
+        application/json:
+          schema:
+            type: object
+            example: 
+              status: 200
+              success: true
+              message: "message"
+    TokenExpiredError:
+      description: 토큰 기간 만료 ( Refresh Token 재발급 필요 )
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 499
+            message: 토큰이 만료되었습니다. 다시 로그인 해주세요.
+    ForbiddenError:
+      description: 유효하지 않은 토큰
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 403
+            message: 유효하지 않은 토큰입니다.
+    UnauthorizedError:
+      description: 인증 토큰의 누락
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 401
+            message: 인증 토큰이 필요합니다.
+    PrimaryKeyCastError:
+      description: 형식에 맞지 않는 PK 전달 시 캐스트 에러
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 400
+            message: 유효하지 않은 아이디 형식입니다.
+    NotFoundError:
+      description: 데이터베이스에 존재하지 않는 PK 전달
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 404
+            message: 해당 아이디의 데이터가 존재하지 않습니다.
+    BadRequestNotKeyword:
+      description: Pathvariable 키워드 누락
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 400
+            message: 유효하지 않은 키워드입니다. 검색어를 입력해주세요.
+    BadRequestNotName:
+      description: RequestBody 분실물 이름 누락
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 400
+            message: 분실물에 대한 이름을 입력해주세요.
+    BadRequestNotImage:
+      description: RequestBody 분실물 사진 파일 누락
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 400
+            message: 분실물에 대한 사진을 등록해주세요.
+    InternalServerError:
+      description: 서버 에러
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            success: false
+            statusCode: 500
+            message: 데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.
+paths:
+  /items:
+    get:
+      summary: 모든 분실물 데이터 조회
+      responses:
+        '200':
+          description: Successfully retrieved user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/item'
+              examples:
+                userExample: 
+                  $ref: '#/components/examples/itemExample'
+  /item:
+    post:
+      summary: 새로운 분실물 등록
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/item'
+      responses:
+        '201':
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/item'
+  /item/{itemId}:
+    get:
+      summary: 특정 분실물 상세 조회
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: ID of the Item
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved specific user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/item'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /admin/item/{itemId}:
+    patch:
+      summary: 분실물 상태 업데이트
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: ID of the Item
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved specific user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/item'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: 특정 분실물 삭제
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/item'
+      responses:
+        '201':
+          description: User successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/item'
+  /admin/items:
+    delete:
+      summary: 모든 분실물 삭제
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: ID of the Item
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved specific user data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/item'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'                  
+  /items/{keyword}:
+      get:
+        summary: Get specific user data by ID
+        parameters:
+          - name: itemId
+            in: path
+            required: true
+            description: ID of the Item
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Successfully retrieved specific user data
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/item'
+          '404':
+            description: User not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'

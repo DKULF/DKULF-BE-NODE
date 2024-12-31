@@ -8,7 +8,7 @@ const ItemSchema = new Schema({
     },
     tags : [ { type : String } ],
     status : Boolean,
-    createAt : String,
+    createdAt : String,
     image : String,
 });
 

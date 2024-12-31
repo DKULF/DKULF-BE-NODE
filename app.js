@@ -1,17 +1,20 @@
 const express = require('express');
-const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const multer = require('multer');
 const Item = require('./models/item');
+const uploadMiddleware = require('./middleware/fileMiddleware');
+const authenticationMiddleware = require('./middleware/authenticationMiddleware');
+
 const app = express();
-const jwt = require('jsonwebtoken');
 
-
-const JWT_SECRET = 'your_secret_key';
+const swaggerUi =  require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerSpec = YAML.load(path.join(__dirname, './build/swagger.yaml'))
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 mongoose.connect('mongodb://localhost:27017/DKULF');
 const db = mongoose.connection;
@@ -20,68 +23,7 @@ db.once("open",() => {
     console.log("DKULF Database Connected!");
 });
 
-const authenticateJWT = (req, res, next) => {
-    
-    if (req.originalUrl.includes('/admin')) {
-        return next();
-    }
-
-    const authHeader = req.headers.authorization;
-
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-        const token = authHeader.split(' ')[1]; 
-
-        jwt.verify(token, JWT_SECRET, (err) => { 
-            if (err) {
-                if (err.name === 'TokenExpiredError') {
-                    return res.status(499).json({
-                        success: false,
-                        statusCode: 499,
-                        error: '토큰이 만료되었습니다. 다시 로그인 해주세요.'
-                    });
-                }
-                return res.status(403).json({
-                    success: false,
-                    statusCode: 403,
-                    error: '유효하지 않은 토큰입니다.'
-                });
-            }
-            next();
-        });
-    } else {
-        return res.status(401).json({
-            success: false,
-            statusCode: 401,
-            error: '인증 토큰이 필요합니다.'
-        });
-    }
-};
-
-// app.use(authenticateJWT);
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, 'public/images'));
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = crypto.randomBytes(16).toString('hex'); 
-        const ext = path.extname(file.originalname); 
-        cb(null, uniqueSuffix + ext);
-    }
-});
-
-const upload = multer({
-    storage,
-    limits: { fileSize: 5 * 1024 * 1024 },
-    fileFilter: (req, file, cb) => {
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
-        if (allowedTypes.includes(file.mimetype)) {
-            cb(null, true);
-        } else {
-            cb(new Error('IMAGE_FILE_TYPE'));
-        }
-    }
-});
+app.use(authenticationMiddleware);
 
 app.use(express.urlencoded({ extended : true }));
 app.use(express.json());
@@ -124,7 +66,8 @@ app.get('/items', async (req, res) => {
         res.status(500).json({ 
             statusCode : 500, 
             success : false, 
-            error: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' });
+            message: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' 
+        });
     }
 });
 
@@ -167,7 +110,7 @@ app.get('/item/:id', async (req, res) => {
         res.status(500).json({ 
             statusCode : 500, 
             success : false, 
-            error: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' });
+            message: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' });
     }
 });
 
@@ -206,12 +149,113 @@ app.get('/items/:keyword', async (req, res) => {
         res.status(500).json({ 
             statusCode : 500, 
             success : false, 
-            error: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' 
+            message: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' 
+        });
+    }
+});
+app.post('/test/item', uploadMiddleware.single('image'), async (req, res) => {
+    try {
+        const { name, tags } = req.body;
+        if (!name) {
+            return res.status(400).json({ 
+                statusCode : 400, 
+                success : false, 
+                message: '분실물에 대한 이름을 입력해주세요.' 
+            });
+        }
+        if (!req.file) {
+            return res.status(400).json({ 
+                statusCode : 400, 
+                success : false, 
+                message: '분실물에 대한 사진을 등록해주세요.' 
+            });
+        }
+        const now = new Date();
+        const offset = 9 * 60 * 60 * 1000; 
+        const koreaTime = new Date(now.getTime() + offset);
+        const year = koreaTime.getFullYear();
+        const month = String(koreaTime.getMonth() + 1).padStart(2, '0'); 
+        const day = String(koreaTime.getDate()).padStart(2, '0'); 
+        const createAt = `${year}.${month}.${day}`;
+                
+        let tagItem = tags ? tags.split(',') : [];
+        tagItem = tagItem.map(tag => tag.trim());
+
+        const newItem = new Item({
+            name,
+            tags: tagItem,
+            status: true,
+            createAt,
+            image: req.file.filename,
+        });
+        await newItem.save();
+        res.status(201).json({ 
+            success : true, 
+            statusCode : 201, 
+            message: '분실물 등록이 완료되었습니다.' 
+        });
+    } catch (err) {
+        console.error('Error saving item:', err);
+        res.status(500).json({ 
+            statusCode : 500, 
+            success : false, 
+            message: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' 
         });
     }
 });
 
-app.patch('/item/:id', async (req, res) => {
+app.post('/item', uploadMiddleware.single('image'), async (req, res) => {
+    try {
+        const { name, tags } = req.body;
+        if (!name) {
+            return res.status(400).json({ 
+                statusCode : 400, 
+                success : false, 
+                message: '분실물에 대한 이름을 입력해주세요.' 
+            });
+        }
+        if (!req.file) {
+            return res.status(400).json({ 
+                statusCode : 400, 
+                success : false, 
+                message: '분실물에 대한 사진을 등록해주세요.' 
+            });
+        }
+        const now = new Date();
+        const offset = 9 * 60 * 60 * 1000; 
+        const koreaTime = new Date(now.getTime() + offset);
+        const year = koreaTime.getFullYear();
+        const month = String(koreaTime.getMonth() + 1).padStart(2, '0'); 
+        const day = String(koreaTime.getDate()).padStart(2, '0'); 
+        const createAt = `${year}.${month}.${day}`;
+                
+        let tagItem = tags ? tags.split(',') : [];
+        tagItem = tagItem.map(tag => tag.trim());
+
+        const newItem = new Item({
+            name,
+            tags: tagItem,
+            status: true,
+            createAt,
+            image: req.file.filename,
+        });
+        await newItem.save();
+        res.status(201).json({ 
+            success : true, 
+            statusCode : 201, 
+            message: '분실물 등록이 완료되었습니다.' 
+        });
+    } catch (err) {
+        console.error('Error saving item:', err);
+        res.status(500).json({ 
+            statusCode : 500, 
+            success : false, 
+            message: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' 
+        });
+    }
+});
+
+app.patch('/admin/item/:id', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -246,58 +290,7 @@ app.patch('/item/:id', async (req, res) => {
         return res.status(400).json({ 
             statusCode : 400, 
             success : false, 
-            error: '분실물에 대한 상태 데이터가 필요합니다.' 
-        });
-    }
-});
-
-app.post('/item', upload.single('image'), async (req, res) => {
-    try {
-        const { name, tags } = req.body;
-        if (!name) {
-            return res.status(400).json({ 
-                statusCode : 400, 
-                success : false, 
-                error: '분실물에 대한 이름을 입력해주세요.' 
-            });
-        }
-        if (!req.file) {
-            return res.status(400).json({ 
-                statusCode : 400, 
-                success : false, 
-                error: '분실물에 대한 사진을 등록해주세요.' 
-            });
-        }
-        const now = new Date();
-        const offset = 9 * 60 * 60 * 1000; 
-        const koreaTime = new Date(now.getTime() + offset);
-        const year = koreaTime.getFullYear();
-        const month = String(koreaTime.getMonth() + 1).padStart(2, '0'); 
-        const day = String(koreaTime.getDate()).padStart(2, '0'); 
-        const createAt = `${year}.${month}.${day}`;
-                
-        let tagItem = tags ? tags.split(',') : [];
-        tagItem = tagItem.map(tag => tag.trim());
-
-        const newItem = new Item({
-            name,
-            tags: tagItem,
-            status: true,
-            createAt,
-            image: req.file.filename,
-        });
-        await newItem.save();
-        res.status(201).json({ 
-            success : true, 
-            statusCode : 201, 
-            message: '분실물 등록이 완료되었습니다.' 
-        });
-    } catch (err) {
-        console.error('Error saving item:', err);
-        res.status(500).json({ 
-            statusCode : 500, 
-            success : false, 
-            error: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.' 
+            message: '분실물에 대한 상태 데이터가 필요합니다.' 
         });
     }
 });
@@ -340,7 +333,7 @@ app.delete('/admin/item/:id', async (req, res) => {
         res.status(500).json({
             statusCode: 500,
             success: false,
-            error: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.'
+            message: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.'
         });
     }
 });
@@ -374,38 +367,38 @@ app.delete('/admin/items', async (req, res) => {
         res.status(500).json({
             statusCode: 500,
             success: false,
-            error: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.'
+            message: '데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요.'
         });
     }
 });
 
 app.use((err, req, res, next) => {
-
+    console.log(err);
     if (err instanceof multer.MulterError) {
         if (err.code === 'LIMIT_FILE_SIZE') {
             return res.status(400).json({ 
                 statusCode : 400, 
                 success : false, 
-                error: '이미지 파일의 최대 크기는 5MB 입니다.' 
+                message: '이미지 파일의 최대 크기는 5MB 입니다.' 
             });
         }
         return res.status(500).json({ 
             statusCode : 500, 
             success : false, 
-            error: '이미지 처리 중 오류가 발생하였습니다. 다시 시도해주세요.'
+            message: '이미지 처리 중 오류가 발생하였습니다. 다시 시도해주세요.'
         });
     }
     if (err.message === 'IMAGE_FILE_TYPE') {
         return res.status(400).json({ 
             statusCode : 400, 
             success : false, 
-            error: '이미지 파일만 등록가능합니다. 다시 시도해 주세요.'
+            message: '이미지 파일만 등록가능합니다. 다시 시도해 주세요.'
         });
     }
     res.status(500).json({ 
         statusCode : 500, 
         success : false, 
-        error: '내부 서버에 문제가 생겼습니다. 다시 시도해 주세요.' 
+        message: '내부 서버에 문제가 생겼습니다. 다시 시도해 주세요.' 
     });
 });
 
