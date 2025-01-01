@@ -291,6 +291,44 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 #### **GET** `/items`
 - **Description**: Retrieve all item data.
 - **Authentication**: Not required.
+- **Success Response**
+```JS
+Status: 200 OK
+{
+	"success":true,
+	"count":2,
+	"items" :
+			[
+			  {
+			    "_id": "6771f251f763dedbd48654da",
+			    "name": "우산",
+			    "tags": [
+			      "우산",
+			      "공학관",
+			      "검정색"
+			    ],
+			    "status": true,
+			    "createdAt": "2024.12.30",
+			    "image": {
+			      "data": IMAGE_FILE_DATA
+			      "ext": ".png",
+			      "contentType": "image/png"
+			    },
+			    "__v": 0
+			  },
+			  ... other items
+			]
+}
+```
+- **Error Response**
+```JS
+Status: 500 SERVER_ERROR
+{
+  "statusCode": 500,
+  "success": false,
+  "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+}
+```
 
 #### **GET** `/item/{itemId}`
 - **Description**: Retrieve details of a specific item by its ID.
@@ -303,6 +341,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 #### **POST** `/item`
 - **Description**: Add a new item.
 - **Authentication**: Required (JWT).
+
+<br>
 
 ### Admin Actions
 
