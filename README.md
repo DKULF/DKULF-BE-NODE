@@ -382,7 +382,7 @@ Status: 500 SERVER_ERROR
   "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
 }
 ```
-
+<br>
 
 #### **GET** `/items/{keyword}`
 - **Description**: Search for items based on a keyword.
@@ -437,7 +437,7 @@ Status: 500 SERVER_ERROR
   "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
 }
 ```
-
+<br>
 
 #### **POST** `/item`
 - **Description**: Add a new item.
@@ -591,6 +591,7 @@ Status: 500 SERVER_ERROR
   "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
 }
 ```
+<br>
 
 #### **DELETE** `/admin/item/{itemId}`
 - **Description**: Delete an item and its associated image.
@@ -655,7 +656,7 @@ Status: 500 SERVER_ERROR
   "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
 }
 ```
-
+<br>
 
 #### **DELETE** `/admin/items`
 - **Description**: Delete all items and their associated image files.
