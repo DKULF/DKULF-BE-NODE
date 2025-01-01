@@ -298,26 +298,26 @@ Status: 200 OK
 	"success":true,
 	"count":2,
 	"items" :
-			[
-			  {
-			    "_id": "6771f251f763dedbd48654da",
-			    "name": "우산",
-			    "tags": [
-			      "우산",
-			      "공학관",
-			      "검정색"
-			    ],
-			    "status": true,
-			    "createdAt": "2024.12.30",
-			    "image": {
-			      "data": IMAGE_FILE_DATA
-			      "ext": ".png",
-			      "contentType": "image/png"
-			    },
-			    "__v": 0
-			  },
-			  ... other items
-			]
+    [
+        {
+        "_id": "6771f251f763dedbd48654da",
+        "name": "우산",
+        "tags": [
+            "우산",
+            "공학관",
+            "검정색"
+        ],
+        "status": true,
+        "createdAt": "2024.12.30",
+        "image": {
+            "data": IMAGE_FILE_DATA
+            "ext": ".png",
+            "contentType": "image/png"
+        },
+        "__v": 0
+        },
+        ... other items
+    ]
 }
 ```
 - **Error Response**
@@ -329,18 +329,193 @@ Status: 500 SERVER_ERROR
   "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
 }
 ```
+<br>
 
 #### **GET** `/item/{itemId}`
 - **Description**: Retrieve details of a specific item by its ID.
 - **Authentication**: Not required.
+- **Success Response**
+```JS
+Status: 200 OK
+
+{
+    "success": true,
+    "item" : {
+        "_id": "6771f251f763dedbd48654da",
+        "name": "우산",
+        "tags": [
+            "우산",
+            "공학관",
+            "검정색"
+        ],
+        "status": true,
+        "createdAt": "2024.12.30",
+        "image": {
+            "data": 
+            "ext": ".png",
+            "contentType": "image/png"
+        },
+        "__v": 0
+    }
+}
+```
+- **Error Response**
+```JS
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "유효하지 않은 아이디 형식입니다."
+}
+
+Status: 404 NOT_FOUND
+{
+  "statusCode": 404,
+  "success": false,
+  "message": "해당 아이디의 데이터가 존재하지 않습니다."
+}
+
+Status: 500 SERVER_ERROR
+{
+  "statusCode": 500,
+  "success": false,
+  "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+}
+```
+
 
 #### **GET** `/items/{keyword}`
 - **Description**: Search for items based on a keyword.
 - **Authentication**: Not required.
+- **Success Response**
+```JS
+Status: 200 OK
+
+# 검색에 대한 결과 존재
+{
+    "success": true,
+        "count": 1,
+        "items": [
+        {
+            "_id": "6771f251f763dedbd48654da",
+            "name": "우산",
+            "tags": [
+            "우산",
+            "공학관",
+            "검정색"
+            ],
+            "status": true,
+            "createdAt": "2024.12.30",
+            "image": {
+            "data": IMAGE_DATA
+            "ext": ".png",
+            "contentType": "image/png"
+            },
+            "__v": 0
+        },
+        ... other data
+        ]
+    }
+}
+
+# 검색에 대한 결과가 존재하지 않을때
+{ "success":true, "count":0, "items":[]}
+```
+- **Error Response**
+```JS
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "유효하지 않은 키워드입니다. 검색어를 입력해주세요."
+}
+
+Status: 500 SERVER_ERROR
+{
+  "statusCode": 500,
+  "success": false,
+  "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+}
+```
+
 
 #### **POST** `/item`
 - **Description**: Add a new item.
 - **Authentication**: Required (JWT).
+- **Success Response**
+```JS
+Status: 201 OK
+{
+  "success": true,
+  "statusCode": 201,
+  "message": "분실물 등록이 완료되었습니다."
+}
+```
+- **Error Response**
+```JS
+Status: 499 Refresh_TOKEN 요청을 위해 특수한 에러코드 사용
+{
+  "success": false,
+  "statusCode": 499,
+  "message": "토큰이 만료되었습니다. 다시 로그인 해주세요."
+}
+
+Status: 403 Forbidden
+{
+  "success": false,
+  "statusCode": 403,
+  "message": "유효하지 않은 토큰입니다."
+}
+
+Status: 401 Unauthorized
+{
+  "success": false,
+  "statusCode": 401,
+  "message": "인증 토큰이 필요합니다."
+}
+
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "분실물에 대한 이름을 입력해주세요."
+}
+
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "분실물에 대한 사진을 등록해주세요."
+}
+
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "이미지 파일의 최대 크기는 5MB 입니다."
+}
+
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "이미지 파일만 등록가능합니다. 다시 시도해 주세요."
+}
+
+Status: 500 SERVER_ERROR
+{
+  "statusCode": 500,
+  "success": false,
+  "message": "이미지 처리 중 오류가 발생하였습니다. 다시 시도해주세요."
+}
+
+Status: 500 SERVER_ERROR
+{
+  "statusCode": 500,
+  "success": false,
+  "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+}
+```
 
 <br>
 
@@ -349,13 +524,188 @@ Status: 500 SERVER_ERROR
 #### **PATCH** `/admin/item/{itemId}`
 - **Description**: Update the status of an item.
 - **Authentication**: Required (Admin JWT).
+- **Success Response**
+```JS
+Status: 200 OK
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "분실물 상태가 성공적으로 업데이트 되었습니다."
+}
+```
+- **Error Response**
+```JS
+Status: 499 Refresh_TOKEN 요청을 위해 특수한 에러코드 사용
+{
+  "success": false,
+  "statusCode": 499,
+  "message": "토큰이 만료되었습니다. 다시 로그인 해주세요."
+}
+
+Status: 403 Forbidden
+{
+  "success": false,
+  "statusCode": 403,
+  "message": "유효하지 않은 토큰입니다."
+}
+
+Status: 401 Unauthorized
+{
+  "success": false,
+  "statusCode": 401,
+  "message": "인증 토큰이 필요합니다."
+}
+
+Status: 403 Forbidden
+{
+  "success": false,
+  "statusCode": 403,
+  "message": "관리자만 접근가능합니다."
+}
+
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "유효하지 않은 아이디 형식입니다."
+}
+
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "분실물에 대한 상태 데이터가 필요합니다."
+}
+
+Status: 404 NOT_FOUND
+{
+  "statusCode": 404,
+  "success": false,
+  "message": "해당 아이디의 데이터가 존재하지 않습니다."
+}
+
+Status: 500 SERVER_ERROR
+{
+  "statusCode": 500,
+  "success": false,
+  "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+}
+```
 
 #### **DELETE** `/admin/item/{itemId}`
 - **Description**: Delete an item and its associated image.
 - **Authentication**: Required (Admin JWT).
+- **Success Response**
+```JS
+Status: 200 OK
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "아이템과 해당 이미지 파일이 삭제되었습니다."
+}
+```
+- **Error Response**
+```JS
+Status: 499 Refresh_TOKEN 요청을 위해 특수한 에러코드 사용
+{
+  "success": false,
+  "statusCode": 499,
+  "message": "토큰이 만료되었습니다. 다시 로그인 해주세요."
+}
+
+Status: 403 Forbidden
+{
+  "success": false,
+  "statusCode": 403,
+  "message": "유효하지 않은 토큰입니다."
+}
+
+Status: 401 Unauthorized
+{
+  "success": false,
+  "statusCode": 401,
+  "message": "인증 토큰이 필요합니다."
+}
+
+Status: 403 Forbidden
+{
+  "success": false,
+  "statusCode": 403,
+  "message": "관리자만 접근가능합니다."
+}
+
+Status: 400 BAD_REQUEST
+{
+  "statusCode": 400,
+  "success": false,
+  "message": "유효하지 않은 아이디 형식입니다."
+}
+
+Status: 404 NOT_FOUND
+{
+  "statusCode": 404,
+  "success": false,
+  "message": "해당 아이디의 데이터가 존재하지 않습니다."
+}
+
+Status: 500 SERVER_ERROR
+{
+  "statusCode": 500,
+  "success": false,
+  "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+}
+```
+
 
 #### **DELETE** `/admin/items`
 - **Description**: Delete all items and their associated image files.
 - **Authentication**: Required (Admin JWT).
+- **Success Response**
+```JS
+Status: 200 OK
+{
+  "success": true,
+  "statusCode": 200,
+  "message": "아이템과 해당 이미지 파일이 삭제되었습니다."
+}
+```
+- **Error Response**
+```JS
+Status: 499 Refresh_TOKEN 요청을 위해 특수한 에러코드 사용
+{
+  "success": false,
+  "statusCode": 499,
+  "message": "토큰이 만료되었습니다. 다시 로그인 해주세요."
+}
+
+Status: 403 Forbidden
+{
+  "success": false,
+  "statusCode": 403,
+  "message": "유효하지 않은 토큰입니다."
+}
+
+Status: 401 Unauthorized
+{
+  "success": false,
+  "statusCode": 401,
+  "message": "인증 토큰이 필요합니다."
+}
+
+Status: 403 Forbidden
+{
+  "success": false,
+  "statusCode": 403,
+  "message": "관리자만 접근가능합니다."
+}
+
+Status: 500 SERVER_ERROR
+{
+  "statusCode": 500,
+  "success": false,
+  "message": "데이터 처리 중 문제가 발생하였습니다. 다시 시도해주세요."
+}
+```
+
 ---
 
