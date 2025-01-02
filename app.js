@@ -8,13 +8,16 @@ const morgan = require('morgan');
 const Item = require('./models/item');
 const uploadMiddleware = require('./middleware/fileMiddleware');
 const authenticationMiddleware = require('./middleware/authenticationMiddleware');
+const cors = require('cors');
 
 const app = express();
+
 
 const swaggerUi =  require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerSpec = YAML.load(path.join(__dirname, './build/swagger.yaml'))
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(cors());
 
 mongoose.connect('mongodb://localhost:27017/DKULF');
 const db = mongoose.connection;
