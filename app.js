@@ -266,18 +266,30 @@ app.patch('/admin/item/:id', async (req, res) => {
             success : false, 
             message: '유효하지 않은 아이디 형식입니다.' });
     }
+    if (typeof status !== 'boolean') {
+        return res.status(400).json({ 
+            statusCode: 400, 
+            success: false, 
+            message: '분실물에 대한 상태 데이터가 필요합니다. true or false 값이어야 합니다.' 
+        });
+    }
     if (status !== undefined) {
         try {
-            const updatedItem = await Item.findByIdAndUpdate(id, { status: status === 'true' }, { new: true });
+            const updatedItem = await Item.findByIdAndUpdate(
+                id, 
+                { status : status }, 
+                { new: true }
+            );
             if (!updatedItem) {
                 return res.status(404).json({ 
-                    statusCode : 404, 
-                    success : false, 
-                    message: '해당 아이디의 데이터가 존재하지 않습니다.' });
+                    statusCode: 404, 
+                    success: false, 
+                    message: '해당 아이디의 데이터가 존재하지 않습니다.' 
+                });
             }
             res.status(200).json({ 
                 statusCode : 200, 
-                success : false, 
+                success : true, 
                 message: '분실물 상태가 성공적으로 업데이트 되었습니다.', 
             });
         } catch (err) {
