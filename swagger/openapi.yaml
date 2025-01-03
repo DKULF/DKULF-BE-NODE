@@ -23,7 +23,7 @@ info:
     위의 토큰들을 Authorize를 클릭하여 추가한 다음 API를 호출하세요.
 
 servers:
-  - url: http://localhost:8081/
+  - url: https://7693-220-149-255-6.ngrok-free.app/
 components:
   schemas:
     item:
