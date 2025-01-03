@@ -179,19 +179,18 @@ app.post('/test/item', uploadMiddleware.single('image'), async (req, res) => {
         const year = koreaTime.getFullYear();
         const month = String(koreaTime.getMonth() + 1).padStart(2, '0'); 
         const day = String(koreaTime.getDate()).padStart(2, '0'); 
-        const createAt = `${year}.${month}.${day}`;
+        const createdAt = `${year}.${month}.${day}`;
                 
         let tagItem = tags ? tags.split(',') : [];
         tagItem = tagItem.map(tag => tag.trim());
-
         const newItem = new Item({
             name,
             tags: tagItem,
             status: true,
-            createAt,
+            createdAt : createdAt,
             image: req.file.filename,
         });
-        await newItem.save();
+        const item = await newItem.save();
         res.status(201).json({ 
             success : true, 
             statusCode : 201, 
@@ -230,7 +229,7 @@ app.post('/item', uploadMiddleware.single('image'), async (req, res) => {
         const year = koreaTime.getFullYear();
         const month = String(koreaTime.getMonth() + 1).padStart(2, '0'); 
         const day = String(koreaTime.getDate()).padStart(2, '0'); 
-        const createAt = `${year}.${month}.${day}`;
+        const createdAt = `${year}.${month}.${day}`;
                 
         let tagItem = tags ? tags.split(',') : [];
         tagItem = tagItem.map(tag => tag.trim());
@@ -239,7 +238,7 @@ app.post('/item', uploadMiddleware.single('image'), async (req, res) => {
             name,
             tags: tagItem,
             status: true,
-            createAt,
+            createdAt,
             image: req.file.filename,
         });
         await newItem.save();
