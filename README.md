@@ -40,11 +40,62 @@
 --- 
 
 ## **Settings**
-### 1. Node.js (18.18.0 LTS)
+### 1. Node.js & NVM Download ( Use 18.18.0 Version )
+#### Ubuntu Bash Environment
+```Bash
+sudo apt update
+```
+```Bash
+sudo apt install nodejs npm
+```
+```Bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+```
+```Bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+```
+```Bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+```
+```Bash
+nvm ls-remote
+nvm install 18.18.0
+```
+#### GUI Environment
 - <a href="https://nodejs.org/ko/">Node.js Download</a>  
 - <a href="https://offbyone.tistory.com/441">Node.js Download Reference</a>  
 
+<br>
+
 ### 2. MongoDB
+#### Ubuntu Bash Environment
+
+```Bash
+sudo apt install wget curl gnupg2 software-properties-common apt-transport-https ca-certificates
+
+curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-server-7.0.gpg
+
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu \
+$(lsb_release -cs)/mongodb-org/7.0 multiverse" | \
+sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+
+sudo apt update
+sudo apt install mongodb-org
+```
+
+```Bash
+sudo systemctl enable --now mongod
+sudo systemctl status mongod
+mongosh --eval 'db.runCommand({ connectionStatus: 1 })'
+mongod --version
+```
+
+#### GUI Environment
 - <a href="https://www.mongodb.com/try/download/community">MongoDB Download</a>  
 - <a href="https://khj93.tistory.com/entry/MongoDB-Window%EC%97%90-MongoDB-%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0">MongoDB Download Reference</a>  
 
