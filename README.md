@@ -355,7 +355,7 @@ curl -X 'GET'
 ```
 - **Request URL**
 ```Bash
-'http://localhost:8081/items'
+http://localhost:8081/items
 ```
 - **Success Response**
 ```JS
@@ -408,7 +408,7 @@ curl -X 'GET'
 ```
 - **Request URL**
 ```Bash
-'http://localhost:8081/item/<int:ItemId>'
+http://localhost:8081/item/<int:ItemId>
 ```
 - **Success Response**
 ```JS
@@ -471,7 +471,7 @@ curl -X 'GET'
 ```
 - **Request URL**
 ```Bash
-'http://localhost:8081/items/<String:keyword>'
+http://localhost:8081/items/<String:keyword>
 ```
 - **Success Response**
 ```JS
@@ -541,7 +541,7 @@ curl -X 'POST' \
 ```
 - **Request URL**
 ```Bash
-'http://localhost:8081/item'
+http://localhost:8081/item
 ```
 - **Success Response**
 ```JS
@@ -636,7 +636,7 @@ curl -X 'PATCH' \
 ```
 - **Request URL**
 ```Bash
-'http://localhost:8081/admin/item/<int:ItemId>'
+http://localhost:8081/admin/item/<int:ItemId>
 ```
 - **Success Response**
 ```JS
@@ -720,7 +720,7 @@ curl -X 'DELETE' \
 ```
 - **Request URL**
 ```Bash
-'http://localhost:8081/admin/item/<int:ItemId>'
+http://localhost:8081/admin/item/<int:ItemId>
 ```
 - **Success Response**
 ```JS
@@ -796,7 +796,7 @@ curl -X 'DELETE' \
   -H 'Content-Type: application/json' \
 ```
 ```Bash
-'http://localhost:8081/admin/items'
+http://localhost:8081/admin/items
 ```
 - **Success Response**
 ```JS
