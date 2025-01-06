@@ -530,7 +530,7 @@ Status: 500 SERVER_ERROR
 - **Authentication**: Required (JWT).
 - **Curl**
 ```Bash
-curl -X 'POST' \
+curl -X 'POST' 
   'http://localhost:8081/item' 
   -H 'accept: application/json' 
   -H 'Authorization: Bearer <JWT Token>' 
@@ -627,11 +627,11 @@ Status: 500 SERVER_ERROR
 - **Authentication**: Required (Admin JWT).
 - **Curl**
 ```Bash
-curl -X 'PATCH' \
+curl -X 'PATCH' 
   'http://localhost:8081/admin/item/<int:ItemId>'
   -H 'accept: application/json' 
-  -H 'Authorization: Bearer <JWT Token>' \
-  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <JWT Token>' 
+  -H 'Content-Type: application/json' 
   -d '{ "status": <Boolean:status> }'
 ```
 - **Request URL**
@@ -712,11 +712,11 @@ Status: 500 SERVER_ERROR
 - **Authentication**: Required (Admin JWT).
 - **Curl**
 ```Bash
-curl -X 'DELETE' \
+curl -X 'DELETE' 
   'http://localhost:8081/admin/item/<int:ItemId>'
   -H 'accept: application/json' 
-  -H 'Authorization: Bearer <JWT Token>' \
-  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <JWT Token>' 
+  -H 'Content-Type: application/json' 
 ```
 - **Request URL**
 ```Bash
@@ -789,11 +789,11 @@ Status: 500 SERVER_ERROR
 - **Authentication**: Required (Admin JWT).
 - **Curl**
 ```Bash
-curl -X 'DELETE' \
+curl -X 'DELETE' 
   'http://localhost:8081/admin/items'
   -H 'accept: application/json' 
-  -H 'Authorization: Bearer <JWT Token>' \
-  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <JWT Token>' 
+  -H 'Content-Type: application/json' 
 ```
 ```Bash
 http://localhost:8081/admin/items
