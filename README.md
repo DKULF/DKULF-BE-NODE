@@ -76,21 +76,26 @@ nvm install 18.18.0
 
 ```Bash
 sudo apt install wget curl gnupg2 software-properties-common apt-transport-https ca-certificates
-
+```
+```Bash
 curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
 sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-server-7.0.gpg
-
+```
+```Bash
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu \
 $(lsb_release -cs)/mongodb-org/7.0 multiverse" | \
 sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-
-sudo apt update
-sudo apt install mongodb-org
 ```
-
+```Bash
+sudo apt update
+```
+```Bash
+sudo apt install mongodb-org
 ```Bash
 sudo systemctl enable --now mongod
 sudo systemctl status mongod
+```
+```Bash
 mongosh --eval 'db.runCommand({ connectionStatus: 1 })'
 mongod --version
 ```
