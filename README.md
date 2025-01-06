@@ -344,6 +344,16 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 #### **GET** `/items`
 - **Description**: Retrieve all item data.
 - **Authentication**: Not required.
+- **Curl**
+```Bash
+curl -X 'GET' \
+  'http://localhost:8081/items' \
+  -H 'accept: application/json'
+```
+- **Request URL**
+```Bash
+'http://localhost:8081/items'
+```
 - **Success Response**
 ```JS
 Status: 200 OK
