@@ -106,6 +106,9 @@ mongod --version
 git clone https://github.com/DKULF/DKULF-BE-NODE.git
 ```
 ```Bash
+cd ./DKULF-BE-NODE
+```
+```Bash
 npm install
 ```
 ```Bash
@@ -346,8 +349,8 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlcyI6WyJST0xFX0FETUlOIl0sImlhdCI6MTc
 - **Authentication**: Not required.
 - **Curl**
 ```Bash
-curl -X 'GET' \
-  'http://localhost:8081/items' \
+curl -X 'GET' 
+  'http://localhost:8081/items' 
   -H 'accept: application/json'
 ```
 - **Request URL**
@@ -397,6 +400,16 @@ Status: 500 SERVER_ERROR
 #### **GET** `/item/{itemId}`
 - **Description**: Retrieve details of a specific item by its ID.
 - **Authentication**: Not required.
+- **Curl**
+```Bash
+curl -X 'GET' 
+  'http://localhost:8081/item/<int:ItemId>' 
+  -H 'accept: application/json'
+```
+- **Request URL**
+```Bash
+'http://localhost:8081/item/<int:ItemId>'
+```
 - **Success Response**
 ```JS
 Status: 200 OK
@@ -450,6 +463,16 @@ Status: 500 SERVER_ERROR
 #### **GET** `/items/{keyword}`
 - **Description**: Search for items based on a keyword.
 - **Authentication**: Not required.
+- **Curl**
+```Bash
+curl -X 'GET' 
+  'http://localhost:8081/items/<String:keyword>' 
+  -H 'accept: application/json'
+```
+- **Request URL**
+```Bash
+'http://localhost:8081/items/<String:keyword>'
+```
 - **Success Response**
 ```JS
 Status: 200 OK
@@ -505,6 +528,21 @@ Status: 500 SERVER_ERROR
 #### **POST** `/item`
 - **Description**: Add a new item.
 - **Authentication**: Required (JWT).
+- **Curl**
+```Bash
+curl -X 'POST' \
+  'http://localhost:8081/item' 
+  -H 'accept: application/json' 
+  -H 'Authorization: Bearer <JWT Token>' 
+  -H 'Content-Type: multipart/form-data' 
+  -F 'name=<String:name>' 
+  -F 'tags=<String:tags>' 
+  -F 'image=;type=image/*'
+```
+- **Request URL**
+```Bash
+'http://localhost:8081/item'
+```
 - **Success Response**
 ```JS
 Status: 201 OK
@@ -587,6 +625,19 @@ Status: 500 SERVER_ERROR
 #### **PATCH** `/admin/item/{itemId}`
 - **Description**: Update the status of an item.
 - **Authentication**: Required (Admin JWT).
+- **Curl**
+```Bash
+curl -X 'PATCH' \
+  'http://localhost:8081/admin/item/<int:ItemId>'
+  -H 'accept: application/json' 
+  -H 'Authorization: Bearer <JWT Token>' \
+  -H 'Content-Type: application/json' \
+  -d '{ "status": <Boolean:status> }'
+```
+- **Request URL**
+```Bash
+'http://localhost:8081/admin/item/<int:ItemId>'
+```
 - **Success Response**
 ```JS
 Status: 200 OK
@@ -659,6 +710,18 @@ Status: 500 SERVER_ERROR
 #### **DELETE** `/admin/item/{itemId}`
 - **Description**: Delete an item and its associated image.
 - **Authentication**: Required (Admin JWT).
+- **Curl**
+```Bash
+curl -X 'DELETE' \
+  'http://localhost:8081/admin/item/<int:ItemId>'
+  -H 'accept: application/json' 
+  -H 'Authorization: Bearer <JWT Token>' \
+  -H 'Content-Type: application/json' \
+```
+- **Request URL**
+```Bash
+'http://localhost:8081/admin/item/<int:ItemId>'
+```
 - **Success Response**
 ```JS
 Status: 200 OK
@@ -724,6 +787,17 @@ Status: 500 SERVER_ERROR
 #### **DELETE** `/admin/items`
 - **Description**: Delete all items and their associated image files.
 - **Authentication**: Required (Admin JWT).
+- **Curl**
+```Bash
+curl -X 'DELETE' \
+  'http://localhost:8081/admin/items'
+  -H 'accept: application/json' 
+  -H 'Authorization: Bearer <JWT Token>' \
+  -H 'Content-Type: application/json' \
+```
+```Bash
+'http://localhost:8081/admin/items'
+```
 - **Success Response**
 ```JS
 Status: 200 OK
